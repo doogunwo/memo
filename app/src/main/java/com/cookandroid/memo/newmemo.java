@@ -28,7 +28,7 @@ public class newmemo extends Activity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.newmemo);
-
+        setTitle("새 메모 작성");
         finish_button = (Button)findViewById(R.id.cancle);
         record_button = (Button)findViewById(R.id.memo_record);
         myHelper = new myDB(this);

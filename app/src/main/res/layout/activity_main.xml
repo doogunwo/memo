@@ -36,11 +36,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <ListView
                 android:id="@+id/memo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             </ListView>
+
         </LinearLayout>
 
     </LinearLayout>

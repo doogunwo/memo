@@ -1,28 +1,33 @@
 package com.cookandroid.memo;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     myDB myHelper;
     SQLiteDatabase sqlDB;
+
+    ListView memo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +35,50 @@ public class MainActivity extends AppCompatActivity {
         setTitle("내 메모");
         myHelper = new myDB(this);
         sqlDB = myHelper.getWritableDatabase();
+        memo = (ListView) findViewById(R.id.memo);
+        final String[] mid ={};
+        ArrayList<String> memoDetails;
+        //
+        memoDetails = getMemo();
+
+        memo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //클릭되면 보임
+                Intent intent = new Intent(getApplicationContext(), MemoActivity.class);
+                String index = Integer.toString(i);
+                intent.putExtra("index",index);
+                startActivity(intent);
+
+            }
+        });
+
+        //리스트뷰 표시하는 부분
+
+
+        //---여기까지
+
 
     }
+    public ArrayList<String> getMemo(){
+        ArrayList<String> List = new ArrayList<>();
+
+        SQLiteDatabase db = myHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT title, created_at FROM memo20203000", null);
+
+        while(cursor.moveToNext()){
+            @SuppressLint("Range") String title = cursor.getString(cursor.getColumnIndex("title"));
+            @SuppressLint("Range") String createdAt = cursor.getString(cursor.getColumnIndex("created_at"));
+            String details = "제목: " + title + "\n" + "작성 시간: " + createdAt;
+            List.add(details);
+        }
+        cursor.close();
+        System.out.println(List);
+        ArrayAdapter<String> adp = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,List);
+        memo.setAdapter(adp);
+        return List;
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -50,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     public void createNewMemo(){
 
@@ -106,7 +152,6 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
 
     }
-
 
 }
 
