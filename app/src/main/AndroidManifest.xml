@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Memo"
         tools:targetApi="29">
+        <activity android:name=".ModifyActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -23,5 +24,6 @@
     <activity android:name=".MemoActivity"/>
         <activity android:name=".newmemo"/>
     </application>
+
 
 </manifest>

@@ -1,101 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
 
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
             <TextView
-                android:text="작성일자:"
-                android:textSize="25dp"
                 android:layout_width="100dp"
-                android:layout_height="50dp">
-            </TextView>
+                android:layout_height="50dp"
+                android:text="작성일자:"
+                android:textSize="25dp"></TextView>
 
             <TextView
                 android:id="@+id/timestamp"
-                android:textSize="25dp"
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
-            </TextView>
+                android:layout_height="50dp"
+                android:textSize="25dp"></TextView>
 
         </LinearLayout>
 
+
+        
         <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/noshow"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
+
+                android:id="@+id/modify_tag"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:text="최종수정일자:"
+                android:textSize="20dp"></TextView>
+
+            <TextView
+                android:id="@+id/timestamp_modify"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textSize="25dp"></TextView>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="50dp"
                 android:text="제목:"
-                android:textSize="25dp"
-                android:layout_width="100dp"
-                android:layout_height="50dp">
-            </TextView>
+                android:textSize="25dp"></TextView>
 
-            <EditText
+            <TextView
                 android:id="@+id/title"
-                android:textSize="25dp"
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
-            </EditText>
+                android:layout_height="50dp"
+                android:textSize="25dp"></TextView>
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="450dp">
+            android:layout_height="400dp"
+            android:orientation="horizontal">
 
             <TextView
-                android:text="내용:"
-                android:textSize="25dp"
                 android:layout_width="100dp"
-                android:layout_height="50dp">
-            </TextView>
+                android:layout_height="50dp"
+                android:text="내용:"
+                android:textSize="25dp"></TextView>
 
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="450dp">
 
-                <EditText
+                <TextView
                     android:id="@+id/content"
                     android:layout_width="match_parent"
-                    android:layout_height="450dp"
+                    android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
-                    android:textSize="25dp">
-                </EditText>
+                    android:textSize="25dp"></TextView>
 
             </ScrollView>
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/noshow_support"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
             <Button
                 android:id="@+id/modify"
                 android:layout_width="135dp"
                 android:layout_height="50dp"
-                android:text="수정">
-            </Button>
+                android:text="수정"></Button>
 
             <Button
                 android:id="@+id/delete"
                 android:layout_width="135dp"
                 android:layout_height="50dp"
-                android:text="삭제">
-            </Button>
+                android:text="삭제"></Button>
 
             <Button
                 android:id="@+id/finish"
@@ -106,7 +138,6 @@
 
 
     </LinearLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

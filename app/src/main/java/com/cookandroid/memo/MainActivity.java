@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
 
     ListView memo;
 
+    Button searchButton;
+
+    EditText searchEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,10 +41,19 @@ public class MainActivity extends AppCompatActivity {
         myHelper = new myDB(this);
         sqlDB = myHelper.getWritableDatabase();
         memo = (ListView) findViewById(R.id.memo);
-        final String[] mid ={};
-        ArrayList<String> memoDetails;
-        //
-        memoDetails = getMemo();
+
+    }
+
+    protected  void onResume(){
+        super.onResume();
+        searchEditText = (EditText) findViewById(R.id.searchEditText);
+        searchButton = (Button) findViewById(R.id.searchButton);
+        ArrayList<ArrayList<String>> memoID;
+        String swch = searchEditText.getText().toString();
+        memoID = getMemo(swch);
+
+        ArrayAdapter<String> adp = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, memoID.get(1));
+        memo.setAdapter(adp);
 
         memo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -47,36 +61,76 @@ public class MainActivity extends AppCompatActivity {
                 //클릭되면 보임
                 Intent intent = new Intent(getApplicationContext(), MemoActivity.class);
                 String index = Integer.toString(i);
-                intent.putExtra("index",index);
+                intent.putExtra("index",index);//memoID.get(1)
+                intent.putExtra("id",memoID.get(0).get(i));
                 startActivity(intent);
+            }
+        });
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),"검색 버튼 누름",Toast.LENGTH_SHORT).show();
+                //검색되면 -> like 출력
+                //검색어없을때 -> 전부 다 출력
+                //검색어있지만 like없을때 - > 검색결과없음 출력
+                String swch = searchEditText.getText().toString();
+                ArrayList<ArrayList<String>> memoID;
+                memoID = getMemo(swch);
+
+                ArrayAdapter<String> adp = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, memoID.get(1));
+                memo.setAdapter(adp);
+
+                memo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        //클릭되면 보임
+                        Intent intent = new Intent(getApplicationContext(), MemoActivity.class);
+                        String index = Integer.toString(i);
+                        intent.putExtra("index",index);//memoID.get(1)
+                        intent.putExtra("id",memoID.get(0).get(i));
+                        startActivity(intent);
+                    }
+                });
+
+
+
 
             }
         });
 
-        //리스트뷰 표시하는 부분
-
-
-        //---여기까지
-
 
     }
-    public ArrayList<String> getMemo(){
-        ArrayList<String> List = new ArrayList<>();
+
+
+    public ArrayList<ArrayList<String>> getMemo(String searchWord) {
+        ArrayList<String> List = new ArrayList<>(); // 제목 표시용
+        ArrayList<String> List2 = new ArrayList<>(); // id 전달용
 
         SQLiteDatabase db = myHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT title, created_at FROM memo20203000", null);
+        Cursor cursor;
 
-        while(cursor.moveToNext()){
+        if (searchWord.isEmpty()) {
+            cursor = db.rawQuery("SELECT title, created_at, id FROM memo20203000", null);
+        } else {
+            String sql = "SELECT title, created_at, id FROM memo20203000 WHERE title LIKE '%" + searchWord + "%'";
+            cursor = db.rawQuery(sql, null);
+        }
+
+        while (cursor.moveToNext()) {
             @SuppressLint("Range") String title = cursor.getString(cursor.getColumnIndex("title"));
             @SuppressLint("Range") String createdAt = cursor.getString(cursor.getColumnIndex("created_at"));
-            String details = "제목: " + title + "\n" + "작성 시간: " + createdAt;
-            List.add(details);
+            @SuppressLint("Range") String id = cursor.getString(cursor.getColumnIndex("id"));
+            String details1 = "제목: " + title + "\n" + "작성 시간: " + createdAt;
+            List.add(details1);
+            List2.add(id);
         }
         cursor.close();
-        System.out.println(List);
-        ArrayAdapter<String> adp = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,List);
-        memo.setAdapter(adp);
-        return List;
+        ArrayList<ArrayList<String>> Listset = new ArrayList<>();
+        Listset.add(List2);
+        Listset.add(List);
+
+        return Listset;
     }
 
 
@@ -99,11 +153,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createNewMemo(){
-
         Toast.makeText(this,"메모 작성 누름",Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getApplicationContext(), newmemo.class);
         startActivity(intent);
-
     }
 
     public void showDeveloperInfo(){
