@@ -42,18 +42,15 @@
                 android:layout_height="match_parent">
             </TextView>
 
-            <ScrollView
+            <EditText
+                android:id="@+id/content_value"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <EditText
-                    android:id="@+id/content_value"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="textMultiLine">
-                </EditText>
-
-            </ScrollView>
+                android:layout_height="wrap_content"
+                android:minLines="5"
+                android:gravity="top"
+                android:scrollbars="vertical|horizontal"
+                android:inputType="textMultiLine">
+            </EditText>
 
         </LinearLayout>
 
@@ -64,12 +61,12 @@
             <Button
                 android:id="@+id/memo_record"
                 android:text="메모기록"
-                android:layout_width="wrap_content"
+                android:layout_width="205dp"
                 android:layout_height="match_parent">
             </Button>
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="205dp"
                 android:layout_height="match_parent"
                 android:id="@+id/cancle"
                 android:text="취소">

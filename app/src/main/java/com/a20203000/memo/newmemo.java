@@ -1,18 +1,27 @@
-package com.cookandroid.memo;
+package com.a20203000.memo;
 
-import android.app.Activity;
+import android.app.ActionBar;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteStatement;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class newmemo extends Activity {
+import com.a20303000.memo.R;
+
+/*
+
+ *개인프로젝트:  newmemo.java
+ *개발자:  컴퓨터공학과 20203000 도건우
+ *20203000@office.deu.ac.kr
+
+ */
+
+public class newmemo extends AppCompatActivity {
 
 
     Button finish_button;
@@ -58,6 +67,8 @@ public class newmemo extends Activity {
                 finish();
             }
         });
+
     }
+
 
 }

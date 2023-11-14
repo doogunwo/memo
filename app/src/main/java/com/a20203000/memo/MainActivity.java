@@ -1,4 +1,4 @@
-package com.cookandroid.memo;
+package com.a20203000.memo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,7 +21,20 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.a20303000.memo.R;
+
 import java.util.ArrayList;
+
+/*
+
+*개인프로젝트:  MainActivity.java
+*개발자:  컴퓨터공학과 20203000 도건우
+*20203000@office.deu.ac.kr
+
+ */
+
+
 
 public class MainActivity extends AppCompatActivity {
     myDB myHelper;
@@ -46,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected  void onResume(){
         super.onResume();
+        //화면에 이 인텐트가 조명되면 새로고침하도록
         searchEditText = (EditText) findViewById(R.id.searchEditText);
         searchButton = (Button) findViewById(R.id.searchButton);
         ArrayList<ArrayList<String>> memoID;
@@ -54,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayAdapter<String> adp = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, memoID.get(1));
         memo.setAdapter(adp);
-
+        //이벤트없으면 그대로
         memo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -70,16 +84,25 @@ public class MainActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"검색 버튼 누름",Toast.LENGTH_SHORT).show();
                 //검색되면 -> like 출력
                 //검색어없을때 -> 전부 다 출력
                 //검색어있지만 like없을때 - > 검색결과없음 출력
                 String swch = searchEditText.getText().toString();
+                if(swch.equals("")){
+                    Toast.makeText(getApplicationContext(),"검색단어가 없습니다.",Toast.LENGTH_SHORT).show();
+                }
                 ArrayList<ArrayList<String>> memoID;
                 memoID = getMemo(swch);
-
-                ArrayAdapter<String> adp = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, memoID.get(1));
-                memo.setAdapter(adp);
+                if(memoID.get(0).isEmpty()) {
+                    Toast.makeText(getApplicationContext(), swch + "에 대한 검색결과가 없습니다.", Toast.LENGTH_SHORT).show();
+                    ArrayAdapter<String> adp = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, memoID.get(1));
+                    memo.setAdapter(adp);
+                }
+                else{
+                    ArrayAdapter<String> adp = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, memoID.get(1));
+                    memo.setAdapter(adp);
+                }
+                //이벤트 발생하면 새로 다시 어레이 리스트 만들어서 리스트뷰에 어댑터로 붙이기
 
                 memo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -89,7 +112,9 @@ public class MainActivity extends AppCompatActivity {
                         String index = Integer.toString(i);
                         intent.putExtra("index",index);//memoID.get(1)
                         intent.putExtra("id",memoID.get(0).get(i));
+                        // List2. get ( i )
                         startActivity(intent);
+                        // 메모엑티비티로 이동
                     }
                 });
 
@@ -104,7 +129,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     public ArrayList<ArrayList<String>> getMemo(String searchWord) {
-        ArrayList<String> List = new ArrayList<>(); // 제목 표시용
+
+        ArrayList<String> List = new ArrayList<>(); // 제목과 컨텐트 표시용
         ArrayList<String> List2 = new ArrayList<>(); // id 전달용
 
         SQLiteDatabase db = myHelper.getReadableDatabase();
@@ -114,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
             cursor = db.rawQuery("SELECT title, created_at, id FROM memo20203000", null);
         } else {
             String sql = "SELECT title, created_at, id FROM memo20203000 WHERE title LIKE '%" + searchWord + "%'";
+            //비슷한거 있으면 찾아
             cursor = db.rawQuery(sql, null);
         }
 
@@ -126,10 +153,15 @@ public class MainActivity extends AppCompatActivity {
             List2.add(id);
         }
         cursor.close();
+
         ArrayList<ArrayList<String>> Listset = new ArrayList<>();
         Listset.add(List2);
         Listset.add(List);
-
+        /*
+        Listset  0 -> List2 = id넘버
+        ListSet  1 -> List  = 타이틀과 컨텐트
+        그리고 2차원 어레이리스트에 합쳐서 딕셔너리 처럼 동작
+         */
         return Listset;
     }
 

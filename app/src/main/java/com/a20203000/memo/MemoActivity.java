@@ -1,4 +1,4 @@
-package com.cookandroid.memo;
+package com.a20203000.memo;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +16,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.a20303000.memo.R;
+
+/*
+
+ *개인프로젝트:  Memoactivity.java
+ *개발자:  컴퓨터공학과 20203000 도건우
+ *20203000@office.deu.ac.kr
+
+ */
 public class MemoActivity extends AppCompatActivity {
 
     TextView title;

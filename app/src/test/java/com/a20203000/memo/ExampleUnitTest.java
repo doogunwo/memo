@@ -1,4 +1,4 @@
-package com.cookandroid.memo;
+package com.a20203000.memo;
 
 import org.junit.Test;
 

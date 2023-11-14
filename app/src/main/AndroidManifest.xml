@@ -7,23 +7,22 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Memo 20203000"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Memo"
         tools:targetApi="29">
-        <activity android:name=".ModifyActivity"/>
+        <activity android:name="com.a20203000.memo.MemoActivity"/>
         <activity
-            android:name=".MainActivity"
+            android:name="com.a20203000.memo.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    <activity android:name=".MemoActivity"/>
-        <activity android:name=".newmemo"/>
+        <activity android:name="com.a20203000.memo.ModifyActivity"/>
+        <activity android:name="com.a20203000.memo.newmemo"/>
+
     </application>
-
-
 </manifest>

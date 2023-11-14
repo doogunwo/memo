@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.cookandroid.memo"
+    namespace = "com.a20303000.memo"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.cookandroid.memo"
+        applicationId = "com.a20203000.memo"
         minSdk = 24
         targetSdk = 33
         versionCode = 1

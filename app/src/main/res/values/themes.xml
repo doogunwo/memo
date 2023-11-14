@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Memo" parent="Theme.Material3.DayNight.DialogWhenLarge">
+    <style name="Base.Theme.Memo" parent="Theme.AppCompat.DayNight.DialogWhenLarge">
         <!-- Customize your light theme here. -->
         <item name="android:title">내 메모</item>
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
